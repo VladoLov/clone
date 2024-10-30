@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
+import { BadgePlus, LogOut } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 // Define the session type for better type safety
 interface User {
@@ -28,7 +30,8 @@ export default async function Navbar() {
           {session && session.user ? (
             <>
               <Link href="/startup/create">
-                <span>Create</span>
+                <span className="max-sm:hidden">Create</span>
+                <BadgePlus className="size-6 sm:hidden text-red-500" />
               </Link>
               <form
                 action={async () => {
@@ -36,10 +39,20 @@ export default async function Navbar() {
                   await signOut({ redirectTo: "/" });
                 }}
               >
-                <Button type="submit">Logout</Button>
+                <button type="submit" className="flex items-center">
+                  <span className="max-sm:hidden">Logout</span>
+                  <LogOut className="size-6 sm:hidden text-red-500" />
+                </button>
               </form>
               <Link href={`/user/${session.user.id}`}>
-                <span>{session.user.name}</span>
+                {/* <span>{session.user.name}</span> */}
+                <Avatar className="size-10">
+                  <AvatarImage
+                    src={session?.user?.image || ""}
+                    alt={session?.user?.name || ""}
+                  />
+                  <AvatarFallback>AV</AvatarFallback>
+                </Avatar>
               </Link>
             </>
           ) : (

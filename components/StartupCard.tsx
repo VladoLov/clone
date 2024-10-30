@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
 import { Author, Startup } from "@/sanity.types";
+import { Skeleton } from "./ui/skeleton";
 export type StartupTypeCard = Omit<Startup, "author" & { author?: Author }>;
 export function StartupCard({ post }: { post: StartupTypeCard }) {
   const {
@@ -60,3 +61,13 @@ export function StartupCard({ post }: { post: StartupTypeCard }) {
     </li>
   );
 }
+
+export const StartupCardSkeleton = () => (
+  <>
+    {[0, 1, 2, 3, 4].map((index: number) => (
+      <li key={cn("skeleton", index)}>
+        <Skeleton className="startup-card_skeleton" />
+      </li>
+    ))}
+  </>
+);
